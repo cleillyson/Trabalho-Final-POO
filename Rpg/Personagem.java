@@ -1,11 +1,15 @@
 package Projetos.Rpg;
 
 abstract class Personagem {
+    String nome;
     double vida;
     double strength;
     double velocidade;
+    String raca;
 
-
+    protected String getNome(){
+        return nome;
+    }
     protected double getVelocidade() {return velocidade;}
     protected void setVelocidade(double valor) {this.velocidade = valor;}
     protected double getStrength() {return strength;}
@@ -14,28 +18,34 @@ abstract class Personagem {
     protected void setVida(double valor) {this.vida = valor;}
 }
 
-class Humano extends Personagem{
+class Warrior extends Personagem{
     //Construtor
-    Humano() {
-        setVida(50);
-        setVelocidade(50);
-        setStrength(50);
+    Warrior(String nome,Racas raca){
+        this.nome = nome;
+        this.vida = raca.getHpBase() * (1.5);
+        this.strength = raca.getStrengthBase() * (1.5);
+        this.velocidade = raca.getSpeedBase() * (1.5);
+        this.raca = raca.getNome();
     }
 }
-class Elfo extends Personagem{
+class Archer extends Personagem{
     //Construtor
-    Elfo() {
-        setVida(30);
-        setVelocidade(70);
-        setStrength(50);
+    Archer(String nome,Racas raca){
+        this.nome = nome;
+        this.vida = raca.getHpBase() * (1.25);
+        this.strength = raca.getStrengthBase() * (1.25);
+        this.velocidade = raca.getSpeedBase() * (2);
+        this.raca = raca.getNome();
     }
 }
 
-class Orc extends Personagem{
+class Mage extends Personagem{
     //Construtor
-    Orc() {
-        setVida(70);
-        setVelocidade(20);
-        setStrength(60);
+    Mage(String nome,Racas raca){
+        this.nome = nome;
+        this.vida = raca.getHpBase() * (1);
+        this.strength = raca.getStrengthBase() * (1.5);
+        this.velocidade = raca.getSpeedBase() * (2);
+        this.raca = raca.getNome();
     }
 }
