@@ -1,19 +1,23 @@
 package Projetos.Rpg;
 public enum Racas {
-    HUMANO("Humano", 50, 50,50),
-    ELFO("Elfo", 30, 50,70),
-    ORC("Orc", 70, 60,20);
-
+    HUMANO("Humano", 5*2, 5,5, 0),
+    ELFO("Elfo", 3*2, 5,7, 0),
+    ORC("Orc", 7*2, 6,2, 0),
+    GOBLIN("Goblin",4*2,5,6, 3),
+    LOBO("Lobo",4*2,4,4, 2),
+    SLIME("Slime",8*2,1,1, 1);
     private String nomeRaca;
-    private int HpBase;
+    private int hpBase;
     private int stregthBase;
     private int speedBase;
+    private double expDrop;
 
-    Racas(String nome, int hp, int atk, int speed) {
+    Racas(String nome, int hp, int atk, int speed,double expDrop) {
         this.nomeRaca = nome;
-        this.HpBase = hp;
+        this.hpBase = hp;
         this.stregthBase = atk;
         this.speedBase = speed;
+        this.expDrop = expDrop;
     }
 
     public String getNome() {
@@ -21,7 +25,7 @@ public enum Racas {
     }
 
     public int getHpBase() {
-        return HpBase;
+        return hpBase;
     }
 
     public int getStrengthBase() {
@@ -32,4 +36,5 @@ public enum Racas {
         return speedBase;
     }
 
+    public double getExpDrop() {return expDrop;}
 }

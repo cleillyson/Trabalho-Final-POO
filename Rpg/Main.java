@@ -2,8 +2,9 @@ package Projetos.Rpg;
 
 import java.util.Scanner;
 import java.util.Random;
+import java.io.IOException;
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException{
         //Variaveis
         Scanner input = new Scanner(System.in);
         Heroi personagem;
@@ -17,7 +18,7 @@ public class Main {
         boolean gameover = true;
         Random random = new Random();
 
-        //Seleção de raça e trilha
+        //Seleção de raça e trilha (classe)
         System.out.println("Escolha uma raça[1 a 3]: ");
         System.out.println("1. Humano\n2. Elfo\n3. Orc");
         while (!escolhaValida) {
@@ -68,17 +69,18 @@ public class Main {
         personagem = new Heroi(nome, racaEscolhida, trilhaEscolhida);
 
         while (gameover){
-            int valor = random.nextInt(1,3);
+
+            int valor = random.nextInt(1,4);
             racaInimigo = switch (valor) {
                 case 1 -> Racas.GOBLIN;
                 case 2 -> Racas.LOBO;
                 default -> Racas.SLIME;
             };
 
+            System.out.println("Selecione uma opção[1 a 5]: ");
+            System.out.println("1. Batalha\n2. Bolsa\n3. Subir andar\n4. Descer andar\n5. Descansar");
 
-            System.out.println("Selecione uma opção[1 a 3]: ");
-            System.out.println("1. Batalha\n2.?\n3.?");
-            inimigo = new Inimigo(racaInimigo);
+            inimigo = new Inimigo(racaInimigo,random.nextInt(personagem.getAndar()-1, personagem.getAndar()+2));
             escolhaValida = false;
             escolha = 0;
 
@@ -96,8 +98,8 @@ public class Main {
             }
             if (escolha == 1){
 
-                System.out.printf("%s\t Level: %d\n\n",inimigo.getRaca(),inimigo.getLevel());
-                System.out.printf("%s\t Level: %d\n",personagem.getRaca(),personagem.getLevel());
+                System.out.printf("%s\t Level: %d\n\n", inimigo.getRaca(), inimigo.getLevel());
+                System.out.printf("%s\t Level: %d\n", personagem.getRaca(), personagem.getLevel());
             } else if (escolha == 2) {
                 gameover = false;
             }

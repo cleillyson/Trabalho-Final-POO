@@ -6,16 +6,20 @@ abstract class Personagem {
     protected double vidaAtual;
     protected double vidaMax;
     protected double strength;
-    protected double velocidade;
-    protected int level = 1;
+    protected double velocidadeMax;
+    protected double velocidadeAtual;
+    protected int level = 0;
+
     //Level
     protected int getLevel(){return  level;}
     protected void  setLevel(int level){this.level = level;}
 
     //Status
     protected String getRaca(){return raca;}
-    protected double getVelocidade() {return velocidade;}
-    protected void setVelocidade(double velocidade) {this.velocidade = velocidade;}
+    protected double getVelocidadeMax() {return velocidadeMax;}
+    protected void setVelocidadeMax(double velocidadeMax) {this.velocidadeMax = velocidadeMax;}
+    protected double getVelocidadeAtual() {return velocidadeAtual;}
+    protected void setVelocidadeAtual(double velocidadeMax) {this.velocidadeAtual = velocidadeMax;}
     protected double getStrength() {return strength;}
     protected void setStrength(double strength) {this.strength = strength;}
     protected double getVidaAtual(){return this.vidaAtual;}
@@ -30,13 +34,13 @@ class Heroi extends Personagem {
     private double expAtual = 0;
     private double expUp = 10;
     private String trilha;
-
+    private int andar = 1;
     //Construtor
     Heroi(String nome, Racas raca, Trilhas trilha) {
         this.nome = nome;
         this.vidaMax = this.vidaAtual = raca.getHpBase() * trilha.getHpMult();
         this.strength = raca.getStrengthBase() * trilha.getStrengthMult();
-        this.velocidade = raca.getSpeedBase() * trilha.getSpeedMult();
+        this.velocidadeMax = raca.getSpeedBase() * trilha.getSpeedMult();
         this.raca = raca.getNome();
         this.trilha = trilha.getNome();
     }
@@ -62,17 +66,29 @@ class Heroi extends Personagem {
         this.expUp = expUp;
     }
 
-    public void Batalha(Heroi heroi, Inimigo inimigo) {
+    public void levelUp() {
+        this.level ++;
+        this.expAtual = 0;
+        this.expUp = expUp * level;
+        this.vidaMax += vidaMax * 0.25;
+        setVidaAtual(getVidaMAx());
+        this.strength += strength * 0.25;
+        this.velocidadeMax += velocidadeMax * 0.25;
 
+    }
+
+    public int getAndar() {
+        return this.andar;
     }
 }
 class Inimigo extends Personagem{
     private double expDrop;
-    Inimigo(Racas raca){
-        this.vidaAtual = raca.getHpBase();
-        this.vidaMax = raca.getHpBase();
-        this.strength = raca.getStrengthBase();
-        this.velocidade = raca.getSpeedBase();
+    Inimigo(Racas raca,int valor){
+        setLevel(valor);
+        this.vidaMax += raca.getHpBase() * level * 0.26;
+        this.vidaAtual = getVidaMAx() * level * 0.26;
+        this.strength += raca.getStrengthBase() * level * 0.26;
+        this.velocidadeMax += raca.getSpeedBase() * level * 0.26;
         this.raca = raca.getNome();
         this.expDrop = raca.getExpDrop() * this.level;
     }
