@@ -1,4 +1,4 @@
-package Projetos.Rpg;
+package Projetos.Rpg.src;
 public enum Racas {
     HUMANO("Humano", 5*3, 5,5, 0),
     ELFO("Elfo", 3*3, 5,7, 0),
