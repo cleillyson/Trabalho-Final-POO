@@ -1,7 +1,7 @@
 package Projetos.Rpg.src;
 import java.util.Random;
 abstract class Personagem {
-
+    //Atributos
     protected String raca;
     protected double vidaAtual;
     protected double vidaMax;
@@ -10,11 +10,11 @@ abstract class Personagem {
     protected double velocidadeAtual;
     protected int level = 0;
 
-    //Level
+    //Mudanças de Level
     protected int getLevel(){return  level;}
     protected void  setLevel(int level){this.level = level;}
 
-    //Status
+    //Stats do personagem
     protected String getRaca(){return raca;}
     protected double getVelocidadeMax() {return velocidadeMax;}
     protected void setVelocidadeMax(double velocidadeMax) {this.velocidadeMax = velocidadeMax;}
@@ -26,34 +26,32 @@ abstract class Personagem {
     protected double getStrength() {return strength;}
     protected void setStrength(double strength) {this.strength = strength;}
     protected double getVidaAtual(){return this.vidaAtual;}
-
     protected void setVidaAtual(double vida) {
         if (vida <= 0) {this.vidaAtual = 0;}
         else {this.vidaAtual = vida;}
     }
     protected double getVidaMAx(){return this.vidaMax;}
     protected void setVidaMax(double vidaMax) {this.vidaMax = vidaMax;}
-
-    protected void bolsa(){
-
-    }
 }
 
 class Heroi extends Personagem {
+    //Atributos do Heroi
     protected String nome;
     private double expAtual = 0;
     private double expUp = 10;
     private String trilha;
     private int andar = 1;
-    //Construtor
+    //Construtor do heroi onde recebe diversos dados da raça e da trilha
     Heroi(String nome, Racas raca, Trilhas trilha) {
         this.nome = nome;
-        this.vidaMax = this.vidaAtual = raca.getHpBase() * trilha.getHpMult();
-        this.strength = raca.getStrengthBase() * trilha.getStrengthMult();
-        this.velocidadeMax = raca.getSpeedBase() * trilha.getSpeedMult();
+        this.vidaMax = this.vidaAtual = raca.getHpBase() + raca.getHpBase() * trilha.getHpMult();
+        this.strength = raca.getStrengthBase() + raca.getStrengthBase() * trilha.getStrengthMult();
+        this.velocidadeMax = raca.getSpeedBase() + raca.getSpeedBase() * trilha.getSpeedMult();
         this.raca = raca.getNome();
         this.trilha = trilha.getNome();
     }
+
+    //Metodos especificos
     public String getNome(){return nome;}
     public void setNome(String nome){this.nome = nome;}
     public String getTrilha() {
@@ -90,8 +88,7 @@ class Heroi extends Personagem {
     public int getAndar() {
         return this.andar;
     }
-
-
+    //Sistema de ataque
     void atacar(Inimigo inimigo, int golpe,Random random) {
         switch (golpe) {
             case 1:
@@ -115,9 +112,20 @@ class Heroi extends Personagem {
                 break;
         }
     }
+    public void subirAndar() {this.andar ++;}
+    public void descerAndar() {
+        this.andar --;
+    }
+    public void descansar(){
+        if (vidaAtual + getVidaAtual()+getVidaMAx()*1/10 <= vidaMax){
+            setVidaAtual(getVidaAtual()+getVidaMAx()*1/10);
+        }
+    }
 }
 class Inimigo extends Personagem{
+    //Atributo do inimigo
     private double expDrop;
+    //construtor do inimigo que recebe a valores da raça e o level
     Inimigo(Racas raca,int valor){
         setLevel(valor);
         this.vidaMax = raca.getHpBase() + raca.getHpBase() * level * 0.26;
@@ -127,8 +135,7 @@ class Inimigo extends Personagem{
         this.raca = raca.getNome();
         this.expDrop = raca.getExpDrop() * this.level;
     }
-
-
+    //Metodo de ataque do inimigo
     public void atacar(Heroi heroi, Random random) {
         switch (random.nextInt(1,4)) {
             case 1:
@@ -154,4 +161,3 @@ class Inimigo extends Personagem{
         }
     }
 }
-
