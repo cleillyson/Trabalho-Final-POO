@@ -2,6 +2,7 @@ package Projetos.Rpg.src;
 import java.util.Random;
 abstract class Personagem {
     //Atributos
+    protected String nome;
     protected String raca;
     protected double vidaAtual;
     protected double vidaMax;
@@ -32,11 +33,33 @@ abstract class Personagem {
     }
     protected double getVidaMAx(){return this.vidaMax;}
     protected void setVidaMax(double vidaMax) {this.vidaMax = vidaMax;}
+
+    void atacar(Personagem personagem, int golpe, Random random) {
+        switch (golpe) {
+            case 1:
+                personagem.setVidaAtual(personagem.getVidaAtual() - strength / 3);
+                System.out.printf("%s Atacou leve\n", nome);
+                break;
+            case 2:
+                if (random.nextInt(0, 11) <= 7) {
+                    personagem.setVidaAtual(personagem.getVidaAtual() - strength / 2);
+                    System.out.printf("%s Atacou normalmente\n",nome);
+                }
+                else {System.out.printf("%s Falhou\n",nome);}
+                break;
+            default:
+                if (random.nextInt(0, 11) <= 5) {
+                    personagem.setVidaAtual(personagem.getVidaAtual() - strength);
+                    System.out.printf("%s Atacou Forte\n",nome);
+                }
+                else {System.out.printf("%s Falhou\n",nome);}
+                break;
+        }
+    }
 }
 
 class Heroi extends Personagem {
     //Atributos do Heroi
-    protected String nome;
     private double expAtual = 0;
     private double expUp = 10;
     private String trilha;
@@ -99,29 +122,6 @@ class Heroi extends Personagem {
         return this.andar;
     }
     //Sistema de ataque
-    void atacar(Inimigo inimigo, int golpe,Random random) {
-        switch (golpe) {
-            case 1:
-                inimigo.setVidaAtual(inimigo.getVidaAtual() - strength / 3);
-                System.out.printf("%s Atacou leve\n",nome);
-                break;
-            case 2:
-
-                if (random.nextInt(0, 11) <= 7) {
-                    inimigo.setVidaAtual(inimigo.getVidaAtual() - strength / 2);
-                    System.out.printf("%s Atacou normalmente\n",nome);
-                }
-                else {System.out.printf("%s Falhou\n",nome);}
-                break;
-            default:
-                if (random.nextInt(0, 11) <= 5) {
-                    inimigo.setVidaAtual(inimigo.getVidaAtual() - strength);
-                    System.out.printf("%s Atacou Forte\n",nome);
-                }
-                else {System.out.printf("%s Falhou\n",nome);}
-                break;
-        }
-    }
     public void subirAndar() {
         if (andar <10){
         this.andar ++;
@@ -161,35 +161,9 @@ class Inimigo extends Personagem{
         this.vidaAtual = this.vidaMax = 1.5*(raca.getHpBase() + raca.getHpBase() * level * 0.5);
         this.strength = 1.5*(raca.getStrengthBase() + raca.getStrengthBase() * level * 0.5);
         this.velocidadeMax = 1.5*(raca.getSpeedBase() + raca.getSpeedBase() * level * 0.5);
-        this.raca = raca.getNome();
+        this.nome = this.raca = raca.getNome();
         this.expDrop = raca.getExpDrop() + raca.getExpDrop() * this.level;
     }
-    //Metodo de ataque do inimigo
-    public void atacar(Heroi heroi, Random random) {
-        switch (random.nextInt(1,4)) {
-            case 1:
-                heroi.setVidaAtual(heroi.getVidaAtual() - strength / 3);
-                System.out.printf("%s Atacou leve\n",raca);
-                break;
-            case 2:
-                if (random.nextInt(0, 11) <= 7){
-                    heroi.setVidaAtual(heroi.getVidaAtual() - strength / 2);
-                    System.out.printf("%s Atacou Normalmente\n",raca);
-                } else {
-                    System.out.printf("%s Falhou\n",raca);
-                }
-                break;
-            default:
-                if (random.nextInt(0, 11) <= 5)
-                {
-                    heroi.setVidaAtual(heroi.getVidaAtual() - strength);
-                    System.out.printf("%s Atacou Forte\n",raca);
-                }
-                else {System.out.printf("%s Falhou\n",raca);}
-                break;
-        }
-    }
-
     public double getExpDrop() {
         return expDrop;
     }

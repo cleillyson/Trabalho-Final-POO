@@ -18,7 +18,7 @@ public class Main {
         boolean game = true;
         utilitarios.limparTela();
 
-        //laço game on acredito que possa ser removido e adicionado if
+        //laço game on
         while (game) {
             utilitarios.print(5);
             escolha = utilitarios.escolha(false, 3);
@@ -89,7 +89,7 @@ public class Main {
                                     personagem.setExpAtual(personagem.getExpAtual()+inimigo.getExpDrop());
                                     System.out.printf("exp atual: %.2f/%.2f\n",personagem.getExpAtual(),personagem.getExpUp());
                                 }
-                                    utilitarios.print();
+                                utilitarios.print();
                                 utilitarios.limparTela();
                                 batalhaOn = false;
                                 break;
@@ -101,13 +101,13 @@ public class Main {
                                 escolha = utilitarios.escolha(false, 4);
                                 //seleciona o ataque
                                 personagem.atacar(inimigo, escolha, random);
-                                //seta a velocidade atual do personagem -= velocidade inimigo max
+                                //seta a velocidade atual do personagem -= velocidade do inimigo max
                                 //melhorar esse sistema
                                 personagem.setVelocidadeAtual(personagem.getVelocidadeAtual() - inimigo.getVelocidadeMax());
 
                             } else if (personagem.getVelocidadeAtual() <= inimigo.getVelocidadeAtual()) {
                                 utilitarios.print(4);
-                                inimigo.atacar(personagem, random);
+                                inimigo.atacar(personagem, random.nextInt(1,3),random);
                                 //seta a velocidade atual do inimigo -= velocidade do personagem max
                                 //melhorar esse sistema
                                 inimigo.setVelocidadeAtual(inimigo.getVelocidadeAtual() - personagem.getVelocidadeMax());
@@ -123,12 +123,10 @@ public class Main {
                         gameover = false;
                     } else if (escolha == 3) {
                         personagem.subirAndar();
-                        utilitarios.input.nextLine();
                         utilitarios.print();
                         utilitarios.limparTela();
                     } else if (escolha == 4) {
                         personagem.descerAndar();
-                        utilitarios.input.nextLine();
                         utilitarios.print();
                         utilitarios.limparTela();
                     } else {
@@ -139,9 +137,11 @@ public class Main {
                     }
                 }
             }
+
             else if (escolha == 2) {
                 game = false;
             }
+
             else {
                 game = false;
                 System.exit(1);
