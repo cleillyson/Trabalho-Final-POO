@@ -15,6 +15,7 @@ public class Utilitarios {
                 }
             } catch (java.util.InputMismatchException e) {
                 System.out.println("\nEntrada inválida. Digite novamente.");
+                input.nextLine();
             }
         }
         return escolha;
@@ -41,20 +42,19 @@ public class Utilitarios {
                 System.out.println("\nDigite seu nome: ");
                 break;
             case 3:
-                System.out.println("\nSelecione uma opção[1 a 5]: ");
-                System.out.println("1. Batalha\n2. Bolsa\n3. Subir andar\n4. Descer andar\n5. Descansar");
-                break;
-            case 4:
                 System.out.println("\nSeu turno: ");
                 System.out.println("Selecione uma opção[1 a 3]");
                 System.out.println("1. Ataque leve\n2. Ataque normal\n3. Ataque pesado");
                 break;
-            case 5:
+            case 4:
                 System.out.println("\nTurno inimigo: ");
+                break;
+            case 5:
+                System.out.println("Selecione uma opção[1 a 3]: ");
+                System.out.println("1. Start\n2. Load game\n3. Exit");
                 break;
             default:
                 break;
-
         }
     }
     public static void print(String iRaca,String hNome,double Ivida,double Hvida,double iVidaMax,double hVidaMax, int iLevel,int hLevel){
