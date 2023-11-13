@@ -1,4 +1,4 @@
-package Projetos.Rpg;
+package Projetos.Rpg.src;
 import java.io.IOException;
 import java.util.Scanner;
 public class Utilitarios {
@@ -21,6 +21,11 @@ public class Utilitarios {
     }
     public static void limparTela() throws IOException, InterruptedException {
         System.out.print("\033c");
+    }
+    //Print aperte enter e uma entrada vazia
+    public static void print(){
+        System.out.println("Aperte enter: ");
+        input.nextLine();
     }
     public static void print(int valor){
         switch (valor){
@@ -57,5 +62,9 @@ public class Utilitarios {
         System.out.printf("%s\t     hp:%.2f/%.2f    Level: %d\n", hNome, Hvida, hVidaMax, hLevel);
 
     }
+    public static void print(String hNome, int andar){
+        System.out.printf("%s\t                 Andar: %d\n", hNome, andar);
+        System.out.println("Selecione uma opção[1 a 5]: ");
+        System.out.println("1. Batalha\n2. menu\n3. Subir andar\n4. Descer andar\n5. Descansar");
+    }
 }
-
