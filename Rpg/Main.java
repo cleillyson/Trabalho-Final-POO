@@ -4,7 +4,6 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
         //Variaveis do main
-        Utilitarios utilitarios = new Utilitarios();
         Random random = new Random();
         Heroi personagem;
         Inimigo inimigo;
@@ -16,20 +15,20 @@ public class Main {
         boolean gameover = true;
         boolean batalhaOn = true;
         boolean game = true;
-        utilitarios.limparTela();
+        Utilitarios.limparTela();
 
         //laço game on
         while (game) {
-            utilitarios.print(5);
-            escolha = utilitarios.escolha(false, 3);
+            Utilitarios.print(5);
+            escolha = Utilitarios.escolha(false, 3);
 
             //if Seleção do menu
             if (escolha == 1) {
-                utilitarios.limparTela();
+                Utilitarios.limparTela();
                 //Seleção de raça, trilha (classe) e nome
-                utilitarios.print(0);
-                escolha = utilitarios.escolha(false, 3);
-                utilitarios.limparTela();
+                Utilitarios.print(0);
+                escolha = Utilitarios.escolha(false, 3);
+                Utilitarios.limparTela();
                 racaEscolhida = switch (escolha) {
                     case 1 -> Racas.HUMANO;
                     case 2 -> Racas.ELFO;
@@ -37,9 +36,9 @@ public class Main {
                     default -> throw new IllegalStateException("Valor invalido: " + escolha);
                 };
 
-                utilitarios.print(1);
-                escolha = utilitarios.escolha(false, 3);
-                utilitarios.limparTela();
+                Utilitarios.print(1);
+                escolha = Utilitarios.escolha(false, 3);
+                Utilitarios.limparTela();
                 trilhaEscolhida = switch (escolha) {
                     case 1 -> Trilhas.Warrior;
                     case 2 -> Trilhas.Archer;
@@ -47,11 +46,11 @@ public class Main {
                     default -> throw new IllegalStateException("Valor invalido: " + escolha);
                 };
 
-                utilitarios.print(2);
-                nome = utilitarios.input.next();
+                Utilitarios.print(2);
+                nome = Utilitarios.input.next();
                 //criação do personagem
                 personagem = new Heroi(nome, racaEscolhida, trilhaEscolhida);
-                utilitarios.limparTela();
+                Utilitarios.limparTela();
                 //Começo do jogo
                 while (gameover) {
                     int valor = random.nextInt(1, 4);
@@ -61,9 +60,9 @@ public class Main {
                         default -> Racas.SLIME;
                     };
                     batalhaOn = true;
-                    utilitarios.print(personagem.getNome(),personagem.getAndar());
-                    escolha = utilitarios.escolha(false, 5);
-                    utilitarios.limparTela();
+                    Utilitarios.print(personagem.getNome(),personagem.getAndar());
+                    escolha = Utilitarios.escolha(false, 5);
+                    Utilitarios.limparTela();
 
                     //Seleção de escolha do jogo
                     if (escolha == 1) {
@@ -71,7 +70,7 @@ public class Main {
                         inimigo = new Inimigo(racaInimigo, random.nextInt(personagem.getAndar() - 1, personagem.getAndar() + 2));
                         while (batalhaOn) {
                             //print da batalha
-                            utilitarios.print(inimigo.getRaca(), personagem.getNome(), inimigo.getVidaAtual(),
+                            Utilitarios.print(inimigo.getRaca(), personagem.getNome(), inimigo.getVidaAtual(),
                             personagem.getVidaAtual(), inimigo.getVidaMAx(), personagem.getVidaMAx(),
                             inimigo.getLevel(), personagem.getLevel());
 
@@ -89,16 +88,16 @@ public class Main {
                                     personagem.setExpAtual(personagem.getExpAtual()+inimigo.getExpDrop());
                                     System.out.printf("exp atual: %.2f/%.2f\n",personagem.getExpAtual(),personagem.getExpUp());
                                 }
-                                utilitarios.print();
-                                utilitarios.limparTela();
+                                Utilitarios.print();
+                                Utilitarios.limparTela();
                                 batalhaOn = false;
                                 break;
                             }
 
                             //se a velocidade do personagem for maior ou igual o personagem começa
                             if (personagem.getVelocidadeAtual() >= inimigo.getVelocidadeAtual()) {
-                                utilitarios.print(3);
-                                escolha = utilitarios.escolha(false, 4);
+                                Utilitarios.print(3);
+                                escolha = Utilitarios.escolha(false, 4);
                                 //seleciona o ataque
                                 personagem.atacar(inimigo, escolha, random);
                                 //seta a velocidade atual do personagem -= velocidade do inimigo max
@@ -106,7 +105,7 @@ public class Main {
                                 personagem.setVelocidadeAtual(personagem.getVelocidadeAtual() - inimigo.getVelocidadeMax());
 
                             } else if (personagem.getVelocidadeAtual() <= inimigo.getVelocidadeAtual()) {
-                                utilitarios.print(4);
+                                Utilitarios.print(4);
                                 inimigo.atacar(personagem, random.nextInt(1,3),random);
                                 //seta a velocidade atual do inimigo -= velocidade do personagem max
                                 //melhorar esse sistema
@@ -114,26 +113,26 @@ public class Main {
                             }
                             //tentando continuar caso aperte enter para limpar a tela
                             //possui bugs
-                            utilitarios.input.nextLine();
-                            utilitarios.print();
-                            utilitarios.limparTela();
+                            Utilitarios.input.nextLine();
+                            Utilitarios.print();
+                            Utilitarios.limparTela();
                         }
 
                     } else if (escolha == 2) {
                         gameover = false;
                     } else if (escolha == 3) {
                         personagem.subirAndar();
-                        utilitarios.print();
-                        utilitarios.limparTela();
+                        Utilitarios.print();
+                        Utilitarios.limparTela();
                     } else if (escolha == 4) {
                         personagem.descerAndar();
-                        utilitarios.print();
-                        utilitarios.limparTela();
+                        Utilitarios.print();
+                        Utilitarios.limparTela();
                     } else {
                         personagem.descansar();
-                        utilitarios.input.nextLine();
-                        utilitarios.print();
-                        utilitarios.limparTela();
+                        Utilitarios.input.nextLine();
+                        Utilitarios.print();
+                        Utilitarios.limparTela();
                     }
                 }
             }

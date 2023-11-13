@@ -1,4 +1,4 @@
-package Projetos.Rpg.src;
+package Projetos.Rpg;
 public enum Trilhas {
     //Enumeração da trilha
     Warrior("Warrior", 1.5, 1.5,1.5),

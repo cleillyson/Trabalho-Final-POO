@@ -1,4 +1,4 @@
-package Projetos.Rpg.src;
+package Projetos.Rpg;
 import java.util.Random;
 abstract class Personagem {
     //Atributos
