@@ -47,7 +47,7 @@ public class Main {
                 };
 
                 Utilitarios.print(2);
-                nome = Utilitarios.input.nextLine();
+                nome = Utilitarios.input.next();
                 //criação do personagem
                 personagem = new Heroi(nome, racaEscolhida, trilhaEscolhida);
                 Utilitarios.limparTela();
