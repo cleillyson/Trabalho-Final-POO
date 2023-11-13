@@ -1,4 +1,4 @@
-package Projetos.Rpg.src;
+package Projetos.Rpg;
 public enum Trilhas {
     Warrior("Warrior", 1.5, 1.5,1.5),
     Mage("Mage", 1.25, 1.25,2),
