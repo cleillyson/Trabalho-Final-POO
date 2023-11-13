@@ -39,7 +39,7 @@ public class Utilitarios {
         }
         else if (valor == 1) {
             System.out.println("Escolha uma Classe[1 a 3]: ");
-            System.out.println("1. Guerreiro\n2. Arqueiro\n3. Elfo");
+            System.out.println("1. Guerreiro\n2. Arqueiro\n3. Mago");
         }
         else if (valor == 2) {
             System.out.println("Digite seu nome: ");

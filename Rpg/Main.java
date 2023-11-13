@@ -1,5 +1,4 @@
 package Projetos.Rpg.src;
-import javax.swing.*;
 import java.util.Random;
 import java.io.IOException;
 public class Main {
@@ -84,8 +83,14 @@ public class Main {
                             //se uma das vidas for igual a 0, fim da batalha
                             if (personagem.getVidaAtual() == 0 || inimigo.getVidaAtual() == 0) {
                                 if (personagem.getVidaAtual() == 0) System.out.println("Você perdeu");
-                                if (inimigo.getVidaAtual() == 0) System.out.println("Você ganhou");
-                                utilitarios.print();
+                                if (inimigo.getVidaAtual() == 0) {
+                                    System.out.println("Você ganhou");
+                                    System.out.printf("Você ganhou %.2f exp\n",inimigo.getExpDrop());
+                                    personagem.setExpAtual(personagem.getExpAtual()+inimigo.getExpDrop());
+                                    System.out.printf("exp atual: %.2f/%.2f\n",personagem.getExpAtual(),personagem.getExpUp());
+                                }
+                                    utilitarios.print();
+                                utilitarios.limparTela();
                                 batalhaOn = false;
                                 break;
                             }
@@ -118,10 +123,19 @@ public class Main {
                         gameover = false;
                     } else if (escolha == 3) {
                         personagem.subirAndar();
+                        utilitarios.input.nextLine();
+                        utilitarios.print();
+                        utilitarios.limparTela();
                     } else if (escolha == 4) {
                         personagem.descerAndar();
+                        utilitarios.input.nextLine();
+                        utilitarios.print();
+                        utilitarios.limparTela();
                     } else {
                         personagem.descansar();
+                        utilitarios.input.nextLine();
+                        utilitarios.print();
+                        utilitarios.limparTela();
                     }
                 }
             }

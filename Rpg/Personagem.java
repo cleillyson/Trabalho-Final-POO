@@ -63,7 +63,17 @@ class Heroi extends Personagem {
     }
 
     public void setExpAtual(double ExpAtual) {
-        this.expAtual = ExpAtual;
+        if (ExpAtual == expUp){
+            levelUp();
+        }
+        else if (ExpAtual > expUp) {
+            var expSobra = ExpAtual - expUp;
+            levelUp();
+            expAtual += expSobra;
+        }
+        else {
+            expAtual = ExpAtual;
+        }
     }
 
     public double getExpUp() {
@@ -77,7 +87,7 @@ class Heroi extends Personagem {
     public void levelUp() {
         this.level ++;
         this.expAtual = 0;
-        this.expUp = expUp * level;
+        this.expUp *= level;
         this.vidaMax += vidaMax * 0.25;
         setVidaAtual(getVidaMAx());
         this.strength += strength * 0.25;
@@ -112,13 +122,33 @@ class Heroi extends Personagem {
                 break;
         }
     }
-    public void subirAndar() {this.andar ++;}
+    public void subirAndar() {
+        if (andar <10){
+        this.andar ++;
+            System.out.println("Você subiu um andar");
+        }
+        else {
+            System.out.println("Não é possível subir mais");
+        }
+    }
     public void descerAndar() {
+        if (andar > 1)
+        {
         this.andar --;
+            System.out.println("Você desceu um andar");
+        }
+        else {
+            System.out.println("Não é possível descer mais");
+        }
     }
     public void descansar(){
         if (vidaAtual + getVidaAtual()+getVidaMAx()*1/10 <= vidaMax){
             setVidaAtual(getVidaAtual()+getVidaMAx()*1/10);
+            System.out.printf("Você recuperou %.2f de hp\n",getVidaAtual()+getVidaMAx()*1/10);
+        }
+        else{
+            setVidaAtual(getVidaMAx());
+            System.out.printf("Você recuperou %.2f de hp\n",getVidaMAx()-getVidaAtual());
         }
     }
 }
@@ -128,12 +158,11 @@ class Inimigo extends Personagem{
     //construtor do inimigo que recebe a valores da raça e o level
     Inimigo(Racas raca,int valor){
         setLevel(valor);
-        this.vidaMax = raca.getHpBase() + raca.getHpBase() * level * 0.26;
-        this.vidaAtual = getVidaMAx();
-        this.strength = raca.getStrengthBase() + raca.getStrengthBase() * level * 0.26;
-        this.velocidadeMax = raca.getSpeedBase() + raca.getSpeedBase() * level * 0.26;
+        this.vidaAtual = this.vidaMax = 1.5*(raca.getHpBase() + raca.getHpBase() * level * 0.5);
+        this.strength = 1.5*(raca.getStrengthBase() + raca.getStrengthBase() * level * 0.5);
+        this.velocidadeMax = 1.5*(raca.getSpeedBase() + raca.getSpeedBase() * level * 0.5);
         this.raca = raca.getNome();
-        this.expDrop = raca.getExpDrop() * this.level;
+        this.expDrop = raca.getExpDrop() + raca.getExpDrop() * this.level;
     }
     //Metodo de ataque do inimigo
     public void atacar(Heroi heroi, Random random) {
@@ -159,5 +188,9 @@ class Inimigo extends Personagem{
                 else {System.out.printf("%s Falhou\n",raca);}
                 break;
         }
+    }
+
+    public double getExpDrop() {
+        return expDrop;
     }
 }
