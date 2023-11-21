@@ -1,4 +1,4 @@
-package Projetos.Rpg;
+package Projetos.Rpg.src;
 import java.util.Random;
 abstract class Personagem {
     //Atributos
@@ -16,6 +16,9 @@ abstract class Personagem {
     protected void  setLevel(int level){this.level = level;}
 
     //Stats do personagem
+    protected void setRaca(String nome){
+        raca = nome;
+    }
     protected String getRaca(){return raca;}
     protected double getVelocidadeMax() {return velocidadeMax;}
     protected void setVelocidadeMax(double velocidadeMax) {this.velocidadeMax = velocidadeMax;}
@@ -73,6 +76,9 @@ class Heroi extends Personagem {
         this.raca = raca.getNome();
         this.trilha = trilha.getNome();
     }
+    Heroi() {
+        //Construtor vazio para caso o jogador queira carregar dados
+    }
 
     //Metodos especificos
     public String getNome(){return nome;}
@@ -80,7 +86,9 @@ class Heroi extends Personagem {
     public String getTrilha() {
         return trilha;
     }
-
+    public void setTrilha(String dado) {
+        trilha = dado;
+    }
     public double getExpAtual() {
         return expAtual;
     }
@@ -120,6 +128,10 @@ class Heroi extends Personagem {
 
     public int getAndar() {
         return this.andar;
+    }
+
+    public void setAndar(int andar) {
+        this.andar = andar;
     }
     //Sistema de ataque
     public void subirAndar() {
