@@ -1,7 +1,6 @@
 package Projetos.Rpg.src;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -14,7 +13,7 @@ import java.util.Scanner;
 public class Utilitarios {
     static int limiteSaves = 5;
     static Path currentDir = Paths.get("");
-    static Path file = currentDir.resolve("src/Dados.txt");
+    static Path file = currentDir.resolve("Dados.txt");
     static Charset charset = StandardCharsets.UTF_8;
     static Scanner input = new Scanner(System.in);
     public static int escolha(Boolean escolhaValida,int max){
@@ -55,7 +54,7 @@ public class Utilitarios {
                 break;
             case 1:
                 System.out.println("\nEscolha uma Classe[1 a 3]: ");
-                System.out.println("1. Guerreiro\n2. Arqueiro\n3. Elfo");
+                System.out.println("1. Guerreiro\n2. Arqueiro\n3. Mago");
                 break;
             case 2:
                 System.out.println("\nDigite seu nome: ");
@@ -153,7 +152,6 @@ public class Utilitarios {
             if (lineNumber == 5) {
                 removerDado(personagem);
             }
-
             String conteudo = criarConteudo(personagem); // Cria o conteúdo a ser salvo
             salvarNoArquivo(conteudo); // Salva no arquivo
             System.out.println("Salvo.");
@@ -164,9 +162,9 @@ public class Utilitarios {
         }
     }
     private static String criarConteudo(Heroi personagem) {
-        return String.format("%s,%s,%.2f,%.2f,%.2f,%.2f,%d,%f,%f,%s,%d\n",
+        return String.format("%s,%s,%f,%f,%f,%f,%f,%d,%f,%f,%s,%d\n",
                 personagem.getNome(), personagem.getRaca(), personagem.getVidaAtual(), personagem.getVidaMAx(),
-                personagem.getStrength(), personagem.getVelocidadeMax(), personagem.getLevel(), personagem.getExpUp(),
+                personagem.getStrength(), personagem.getVelocidadeMax(),personagem.getVelocidadeMax(), personagem.getLevel(), personagem.getExpUp(),
                 personagem.getExpAtual(), personagem.getTrilha(), personagem.getAndar());
     }
     private static void salvarNoArquivo(String conteudo) {

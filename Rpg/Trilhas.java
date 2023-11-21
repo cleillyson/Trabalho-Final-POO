@@ -1,9 +1,9 @@
-package Projetos.Rpg;
+package Projetos.Rpg.src;
 public enum Trilhas {
     //Enumeração da trilha
-    Warrior("Warrior", 1.5, 1.5,1.5),
-    Mage("Mage", 1.25, 1.25,2),
-    Archer("Archer", 1, 1.5,2);
+    Warrior("Guerreiro", 1.5, 1.5,1.5),
+    Mage("Mago", 1.25, 1.25,2),
+    Archer("Arqueiro", 1, 1.5,2);
 
     //Atributos da trilha
     private String nomeTrilha;
