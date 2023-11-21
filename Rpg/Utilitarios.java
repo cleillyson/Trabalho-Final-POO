@@ -1,13 +1,18 @@
 package Projetos.Rpg.src;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.List;
 import java.util.Scanner;
 public class Utilitarios {
+    static int limiteSaves = 5;
     static Path currentDir = Paths.get("");
     static Path file = currentDir.resolve("src/Dados.txt");
     static Charset charset = StandardCharsets.UTF_8;
@@ -67,9 +72,18 @@ public class Utilitarios {
                 System.out.println("Selecione uma opção[1 a 3]: ");
                 System.out.println("1. Start\n2. Load game\n3. Exit");
                 break;
+            case 6:
+                System.out.println("Selecione uma opção[1 a 5]");
+                System.out.println("1. Salvar\n2. Carregar\n3. Equipar item\n4. Desequipar\n5. Voltar\n");
+                break;
             default:
                 break;
         }
+    }
+    public static void print(Heroi personagem){
+        System.out.printf("Nome: %s\t\tRaça: %s\t\tTrilha: %s\nAndar: %d\t\tLevel: %d\t\tExp: %.2f/%.2f\nHp: %.2f/%.2f\t\tStrength: %.2f\t\tVelocidade: %.2f\n",
+                personagem.getNome(),personagem.getRaca(),personagem.getTrilha(),personagem.getAndar(), personagem.getLevel(),personagem.getExpAtual(),personagem.getExpUp(),
+                personagem.getVidaAtual(), personagem.getVidaMAx(),personagem.getStrength(),personagem.getVelocidadeMax());
     }
     public static void print(String iRaca,String hNome,double Ivida,double Hvida,double iVidaMax,double hVidaMax, int iLevel,int hLevel){
         System.out.printf("%s\t     hp:%.2f/%.2f    Level: %d\n\n", iRaca, Ivida, iVidaMax, iLevel);
@@ -81,10 +95,7 @@ public class Utilitarios {
         System.out.println("Selecione uma opção[1 a 5]: ");
         System.out.println("1. Batalha\n2. menu\n3. Subir andar\n4. Descer andar\n5. Descansar");
     }
-
-    public static void carregarDados(Heroi personagem) throws IOException {
-        long fileSize = Files.size(file);
-        if (fileSize != 0){
+    private static int mostrarDados(Heroi personagem){
         var lineNumber = 1;
         try (BufferedReader reader = Files.newBufferedReader(file, charset)) {
             String line;
@@ -98,7 +109,12 @@ public class Utilitarios {
         } catch (IOException | ArrayIndexOutOfBoundsException | NumberFormatException x) {
             System.err.format("Erro ao processar o arquivo: %s%n", x);
         }
-
+        return lineNumber;
+    }
+    public static void carregarDados(Heroi personagem) throws IOException {
+        long fileSize = Files.size(file);
+        var lineNumber = mostrarDados(personagem);
+        if (fileSize != 0){
             var escolha = escolha(false,lineNumber);
             lineNumber = 1;
             try (BufferedReader reader = Files.newBufferedReader(file, charset)) {
@@ -125,9 +141,56 @@ public class Utilitarios {
             } catch (IOException x) {
                 System.err.format("IOException: %s%n", x);
             }
-        }else {
+        }
+        else {
             System.out.println("Nenhum dado salvo");
             print();
         }
+    }
+    public static void salvarDados(Heroi personagem) {
+        try {
+            long lineNumber = Files.lines(file).count(); // Conta o número de linhas no arquivo
+            if (lineNumber == 5) {
+                removerDado(personagem);
+            }
+
+            String conteudo = criarConteudo(personagem); // Cria o conteúdo a ser salvo
+            salvarNoArquivo(conteudo); // Salva no arquivo
+            System.out.println("Salvo.");
+            print();
+
+        } catch (IOException e) {
+            System.err.println("Erro ao processar o arquivo: " + e.getMessage());
+        }
+    }
+    private static String criarConteudo(Heroi personagem) {
+        return String.format("%s,%s,%.2f,%.2f,%.2f,%.2f,%d,%f,%f,%s,%d\n",
+                personagem.getNome(), personagem.getRaca(), personagem.getVidaAtual(), personagem.getVidaMAx(),
+                personagem.getStrength(), personagem.getVelocidadeMax(), personagem.getLevel(), personagem.getExpUp(),
+                personagem.getExpAtual(), personagem.getTrilha(), personagem.getAndar());
+    }
+    private static void salvarNoArquivo(String conteudo) {
+        try (BufferedWriter writer = Files.newBufferedWriter(file, charset, StandardOpenOption.APPEND)) {
+            writer.write(conteudo);
+        } catch (IOException e) {
+            System.err.println("Erro ao salvar no arquivo: " + e.getMessage());
+        }
+    }
+    private static void removerDado(Heroi personagem) throws IOException {
+            var limiteEscolha = mostrarDados(personagem);
+            System.out.println("Escolha um save para remover ");
+            var escolha = escolha(false,limiteEscolha);
+
+            List<String> linhas = Files.readAllLines(file, StandardCharsets.UTF_8);
+
+            if (escolha >= 0 && escolha < linhas.size()) {
+                linhas.remove(escolha); // Remove a linha especificada
+            } else {
+                System.out.println("Índice inválido.");
+            }
+            // Escreve o novo conteúdo de volta no arquivo
+            Files.write(file, linhas, StandardCharsets.UTF_8);
+            mostrarDados(personagem); // Mostra os dados após a remoção
+
     }
 }

@@ -21,7 +21,7 @@ public class Main {
             Utilitarios.print(5);
             escolha = Utilitarios.escolha(false, 3);
 
-            //if Seleção do menu
+            //if Seleção do menu inicial
             if (escolha == 1) {
                 Utilitarios.limparTela();
                 //Seleção de raça, trilha (classe) e nome
@@ -61,7 +61,7 @@ public class Main {
                 System.exit(1);
             }
 
-            //Começo do jogo caso não carregue dados ou caso carregue
+            //Começo do jogo caso não saia do programa
             while (gameover & personagem.nome != null) {
                 int valor = random.nextInt(1, 4);
                 racaInimigo = switch (valor) {
@@ -125,17 +125,43 @@ public class Main {
                         Utilitarios.limparTela();
                     }
 
-                } else if (escolha == 2) {
-                    gameover = false;
-                } else if (escolha == 3) {
+                }
+                else if (escolha == 2) {
+                    while (true){
+                        Utilitarios.print(personagem);
+                        Utilitarios.print(6);
+                        escolha = Utilitarios.escolha(false, 5);
+                        if (escolha == 1){
+                            Utilitarios.salvarDados(personagem);
+                        }
+                        if (escolha == 2){
+                            Utilitarios.carregarDados(personagem);
+                        }
+                        if (escolha == 3){
+                            System.out.println("Não tem essa função ainda");
+                            Utilitarios.print();
+                        }
+                        if (escolha == 4){
+                            System.out.println("Também não tem essa função");
+                            Utilitarios.print();
+                        }
+                        if (escolha == 5){
+                            break;
+                        }
+                        Utilitarios.limparTela();
+                    }
+                }
+                else if (escolha == 3) {
                     personagem.subirAndar();
                     Utilitarios.print();
                     Utilitarios.limparTela();
-                } else if (escolha == 4) {
+                }
+                else if (escolha == 4) {
                     personagem.descerAndar();
                     Utilitarios.print();
                     Utilitarios.limparTela();
-                } else {
+                }
+                else {
                     personagem.descansar();
                     Utilitarios.print();
                     Utilitarios.limparTela();
