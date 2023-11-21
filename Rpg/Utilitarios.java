@@ -99,7 +99,7 @@ public class Utilitarios {
         try (BufferedReader reader = Files.newBufferedReader(file, charset)) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] dados = line.split(",");
+                String[] dados = line.split(";");
                 String nome = dados[0].trim();
                 int level = Integer.parseInt(dados[6].trim()); // Considerando que o level está na posição 6
                 System.out.println( "Save "+ lineNumber + " Nome: " + nome + ", Level: " + level);
@@ -120,17 +120,17 @@ public class Utilitarios {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (lineNumber == escolha) {
-                        String[] dados = (line.split(","));
+                        String[] dados = (line.split(";"));
                         personagem.setNome(dados[0].trim());
                         personagem.setRaca(dados[1].trim());
-                        personagem.setVidaAtual(Double.parseDouble(dados[2].trim()));
-                        personagem.setVidaMax(Double.parseDouble(dados[3].trim()));
-                        personagem.setStrength(Double.parseDouble(dados[4].trim()));
-                        personagem.setVelocidadeMax(Double.parseDouble(dados[5].trim()));
-                        personagem.setVelocidadeAtual(Double.parseDouble(dados[5].trim()));
+                        personagem.setVidaAtual(Double.parseDouble(dados[2].replace(',', '.').trim()));
+                        personagem.setVidaMax(Double.parseDouble(dados[3].replace(',', '.').trim()));
+                        personagem.setStrength(Double.parseDouble(dados[4].replace(',', '.').trim()));
+                        personagem.setVelocidadeMax(Double.parseDouble(dados[5].replace(',', '.').trim()));
+                        personagem.setVelocidadeAtual(Double.parseDouble(dados[5].replace(',', '.').trim()));
                         personagem.setLevel(Integer.parseInt((dados[6].trim())));
-                        personagem.setExpUp(Integer.parseInt((dados[8].trim())));
-                        personagem.setExpAtual(Integer.parseInt((dados[7].trim())));
+                        personagem.setExpUp(Double.parseDouble((dados[7].replace(',', '.').trim())));
+                        personagem.setExpAtual(Double.parseDouble((dados[8].replace(',', '.').trim())));
                         personagem.setTrilha(dados[9].trim());
                         personagem.setAndar(Integer.parseInt(((dados[10].trim()))));
                         break;
@@ -162,10 +162,11 @@ public class Utilitarios {
         }
     }
     private static String criarConteudo(Heroi personagem) {
-        return String.format("%s,%s,%f,%f,%f,%f,%f,%d,%f,%f,%s,%d\n",
-                personagem.getNome(), personagem.getRaca(), personagem.getVidaAtual(), personagem.getVidaMAx(),
-                personagem.getStrength(), personagem.getVelocidadeMax(),personagem.getVelocidadeMax(), personagem.getLevel(), personagem.getExpUp(),
-                personagem.getExpAtual(), personagem.getTrilha(), personagem.getAndar());
+        return String.format("%s;%s;%.2f;%.2f;%.2f;%.2f;%d;%.2f;%.2f;%s;%d\n",
+                personagem.getNome(), personagem.getRaca(),
+                personagem.getVidaAtual(), personagem.getVidaMAx(),
+                personagem.getStrength(), personagem.getVelocidadeMax(), personagem.getLevel(), personagem.getExpUp(), personagem.getExpAtual(),
+                personagem.getTrilha(), personagem.getAndar());
     }
     private static void salvarNoArquivo(String conteudo) {
         try (BufferedWriter writer = Files.newBufferedWriter(file, charset, StandardOpenOption.APPEND)) {
