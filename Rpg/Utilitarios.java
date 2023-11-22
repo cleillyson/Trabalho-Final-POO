@@ -75,6 +75,9 @@ public class Utilitarios {
                 System.out.println("Selecione uma opção[1 a 5]");
                 System.out.println("1. Salvar\n2. Carregar\n3. Equipar item\n4. Desequipar\n5. Voltar\n");
                 break;
+            case 7:
+                System.out.println("Este jogo é uma simulação de um RPG \n- Crie seu personagem escolhendo uma classe e uma raça. \n- Derrote os inimigos em cada andar da torre e chegue até o final!");
+                break;
             default:
                 break;
         }

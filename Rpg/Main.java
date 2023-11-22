@@ -16,6 +16,10 @@ public class Main {
         boolean game = true;
         Utilitarios.limparTela();
 
+        Utilitarios.print(7);
+        Utilitarios.print();
+        Utilitarios.limparTela();
+        
         //laço game on
         while (game) {
             Utilitarios.print(5);
