@@ -49,11 +49,11 @@ public class Utilitarios {
     public static void print(int valor){
         switch (valor){
             case 0:
-                System.out.println("\nEscolha uma raça[1 a 3]: ");
+                System.out.println("Escolha uma raça[1 a 3]: ");
                 System.out.println("1. Humano\n2. Elfo\n3. Orc");
                 break;
             case 1:
-                System.out.println("\nEscolha uma Classe[1 a 3]: ");
+                System.out.println("Escolha uma Classe[1 a 3]: ");
                 System.out.println("1. Guerreiro\n2. Arqueiro\n3. Mago");
                 break;
             case 2:
@@ -73,11 +73,13 @@ public class Utilitarios {
                 break;
             case 6:
                 System.out.println("Selecione uma opção[1 a 5]");
-                System.out.println("1. Salvar\n2. Carregar\n3. Equipar item\n4. Desequipar\n5. Voltar\n");
+                System.out.println("1. Salvar\n2. Carregar\n3. Equipar item\n4. Desequipar\n5. Voltar\n6. Menu Inicial");
                 break;
             case 7:
-                System.out.println("Este jogo é uma simulação de um RPG \n- Crie seu personagem escolhendo uma classe e uma raça. \n- Derrote os inimigos em cada andar da torre e chegue até o final!");
+                System.out.println("Este jogo é uma simulação de um RPG \n- Crie seu personagem escolhendo uma classe e uma raça. \n- Derrote os inimigos em cada andar da torre e chegue até o final!\n- Descansar pode chamar inimigos, cuidado!!");
                 break;
+            case 8:
+                System.out.println("Game over");
             default:
                 break;
         }
